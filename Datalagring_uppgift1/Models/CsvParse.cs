@@ -52,6 +52,8 @@ namespace Datalagring_uppgift1.Models
 
         public bool ReadRow(CsvRow row)
         {
+
+            //fixa en replace
             row.LineText = ReadLine();
             if (String.IsNullOrEmpty(row.LineText))
                 return false;

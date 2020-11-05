@@ -1,12 +1,16 @@
 ﻿using Datalagring_uppgift1.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -44,22 +48,40 @@ namespace Datalagring_uppgift1
 
             CsvRows.Clear();
 
-            using (CsvFileReader csvReader = new CsvFileReader(await file.OpenStreamForReadAsync()))
+            if (file.FileType == ".csv")
             {
-                CsvRow row = new CsvRow();
-                while (csvReader.ReadRow(row))
+                using (CsvFileReader csvReader = new CsvFileReader(await file.OpenStreamForReadAsync()))
                 {
-                    string newRow = "";
-                    for (int i = 0; i < row.Count; i++)
+                    CsvRow row = new CsvRow();
+                    while (csvReader.ReadRow(row))
                     {
-                        newRow += row[i] + ",";
-                    }
+                        string newRow = "";
+                        for (int i = 0; i < row.Count; i++)
+                        {
+                            newRow += row[i] + ",";
+                        }
 
-                    CsvRows.Add(newRow);
+                        CsvRows.Add(newRow);
+                    }
                 }
+
+                CsvRowsListView.ItemsSource = CsvRows;
             }
 
-            CsvRowsListView.ItemsSource = CsvRows;
+
+            if (file.FileType == ".json")
+            {
+                string text = await FileIO.ReadTextAsync(file);
+                List<Person> DeserializedProducts = JsonConvert.DeserializeObject<List<Person>>(text);
+                JsonRowsListView.ItemsSource = DeserializedProducts;
+            }
+
+            if (file.FileType == ".xml")
+            {
+
+
+
+            }
         }
     }
 }

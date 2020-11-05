@@ -13,16 +13,44 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <!--<ColumnDefinition Width="*"/>-->
         </Grid.ColumnDefinitions>
-        <Button Content="Load Up Our CSV File" VerticalAlignment="Top" Margin="10" Click="Button_Click"/>
+        <Button Content="Click to load file" VerticalAlignment="Top" Margin="10" Click="Button_Click"/>
         <Grid Grid.Column="1" Margin="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Här kommer CSV/XML/Json synas" />
+            <TextBlock Text="Här kommer CSV synas" />
             <ListView x:Name="CsvRowsListView" Grid.Row="1">
+               
+            </ListView>
+            
 
+           
+
+        </Grid>
+        <Grid Grid.Column="2" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Här kommer Json synas" />
+            <ListView x:Name="JsonRowsListView" Grid.Row="2">
+            <ListView.ItemTemplate>
+                
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding DisplayName}" />
+                        <TextBlock Text="{Binding City}" />
+
+
+                    </StackPanel>
+
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
             </ListView>
         </Grid>
     </Grid>
