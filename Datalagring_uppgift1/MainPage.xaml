@@ -14,6 +14,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <!--<ColumnDefinition Width="*"/>-->
         </Grid.ColumnDefinitions>
         <Button Content="Click to load file" VerticalAlignment="Top" Margin="10" Click="Button_Click"/>
@@ -43,7 +44,6 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding DisplayName}" />
-                        <TextBlock Text="{Binding City}" />
 
 
                     </StackPanel>
@@ -51,6 +51,27 @@
 
                 </DataTemplate>
             </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Column="3" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Här kommer Xml synas" />
+            <ListView x:Name="XmlRowsListView" Grid.Row="2">
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding DisplayName}" />
+
+
+                        </StackPanel>
+
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </Grid>
     </Grid>

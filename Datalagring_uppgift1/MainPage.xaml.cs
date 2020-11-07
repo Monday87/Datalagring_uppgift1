@@ -7,6 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using Windows.Data.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -60,8 +63,8 @@ namespace Datalagring_uppgift1
                         {
                             newRow += row[i] + ",";
                         }
-
-                        CsvRows.Add(newRow);
+                        string print = newRow.Replace(";", " ");
+                        CsvRows.Add(print);
                     }
                 }
 
@@ -78,7 +81,23 @@ namespace Datalagring_uppgift1
 
             if (file.FileType == ".xml")
             {
+                string text = await FileIO.ReadTextAsync(file);
+                XmlReader xmlReader = XmlReader.Create(new MemoryStream(Encoding.UTF8.GetBytes(text)));
 
+                if (xmlReader.IsStartElement("Person"))
+                {
+                   
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(Person));
+
+                    Person person = (Person)xmlSerializer.Deserialize(xmlReader);
+
+                    List<Person> personlist = new List<Person>();
+                    personlist.Add(person);
+
+
+                    XmlRowsListView.ItemsSource = personlist;
+                    xmlReader.Close();
+                }
 
 
             }
